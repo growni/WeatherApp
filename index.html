@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
+</head>
+<body>
+<div class="container">
+    <form class="search-bar">
+        <input type="text" placeholder="Search country" name="q">
+        <button type="submit"><img src="images/search-interface-symbol.png" alt="" id="search-img"></button>
+    </form>
+</div>
+<h1 class="hidden">Current weather for: Name, Capital</h1>
+<div class="hidden" class="infoContainer" >
+
+        <div class="col" id="temp">
+            <div>
+            <img src="images/temperature-icon-png-1.png" alt="">
+            </div>
+            <h2> </h2>
+        </div>
+        <div class="col" id="date">
+            <div>
+                <img src="images/dateIcon.png" alt="">
+            </div>
+            <h2> </h2>
+        </div>
+        <div class="col" id="windSpeed">
+            <div>
+                <img src="images/windIcon.png" alt="">
+            </div>
+            <h2> </h2>
+        </div>
+
+</div>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
