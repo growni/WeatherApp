@@ -46,7 +46,9 @@ body {
     border: 0;
     outline: none;
     padding: 24px 20px;
-    font-size: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 0.5px 0.5px black;
     color: rgb(229, 124, 81);
 }
 
@@ -69,17 +71,16 @@ body {
 }
 h1 {
     font-family: 'Lato', sans-serif;
-    color:#382c1a;
+    color:#e7b260;
     text-align: center;
     font-size: 40px;
-    text-shadow: 0.5px 0.5px#e7b260 ;
+    text-shadow: 0.5px 0.5px #382c1a ;
 }
 .infoContainer {
     display:grid;
     grid-gap: 16px;
     grid-template-columns: 1fr 1fr 1fr;
     padding: 16px;
-
 }
 
 .infoContainer .col {
@@ -106,3 +107,10 @@ h1 {
     
 }
 
+
+@media screen and (max-width: 700px) {
+  .infoContainer {
+    display: block;
+  }
+  
+}

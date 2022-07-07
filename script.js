@@ -11,6 +11,11 @@ function solve() {
     const windSpeedElement = document.querySelector('#windSpeed h2');
     const hiddenElements = Array.from(document.querySelectorAll('.hidden'));
     const hiddenDiv = hiddenElements[1];
+    const heading = document.querySelector('h1');
+
+    let latitude = 0;
+    let longitude = 0;
+    let country = '';
 
     let currentTemp = 0;
     let windSpeed = 0;
@@ -19,47 +24,61 @@ function solve() {
     async function findCountry() {
         const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${inputElement.value}`);
         const results = response.json();
-        return results;
-    }
-    
-    async function fillData() {
+        console.log(results);
+        return results
 
-        const response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m&current_weather=true&windspeed_unit&timezone=UTC")
+    }
+
+    async function fillData(lat, long) {
+
+        const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&hourly=temperature_2m&current_weather=true&windspeed_unit&timezone=UTC`)
         const data = await response.json();
 
         return data;
     }
 
-    
+
 
     button.addEventListener("click", showInfo);
 
 
 
     function showInfo(e) {
-        
+
 
         e.preventDefault();
 
         findCountry().then(results => {
-            console.log(results);
-        })
-        
-        fillData().then(data => {
-           
-            currentTemp = data.current_weather.temperature;
-            windSpeed = data.current_weather.windspeed;
-            date = data.current_weather.time;
             
-            tempElement.textContent = currentTemp + ' C\u00B0';
-            dateElement.textContent = date.split('T')[0];
-            windSpeedElement.textContent = windSpeed + ' km/h'; 
+            latitude = results.results[0].latitude;
+            longitude = results.results[0].longitude;
+            country = results.results[0].country;
 
-            hiddenElements.forEach(e => e.classList.remove('hidden'))
-            hiddenDiv.className = 'infoContainer'
-            inputElement.value = '';
-        });
+            fillData(latitude, longitude).then(data => {
+
+                currentTemp = data.current_weather.temperature;
+                windSpeed = data.current_weather.windspeed;
+                date = data.current_weather.time;
+
+                if(inputElement.value == country) {
+                    heading.textContent = `Current weather for: ${inputElement.value}`;
+                } else {
+                    heading.textContent = `Current weather for: ${inputElement.value}, ${country} `;
+                }
+
+                tempElement.textContent = currentTemp + ' C\u00B0';
+                dateElement.textContent = date.split('T')[0];
+                windSpeedElement.textContent = windSpeed + ' km/h';
+    
+                hiddenElements.forEach(e => e.classList.remove('hidden'))
+                hiddenDiv.className = 'infoContainer'
+                inputElement.value = '';
+            });
+            
+        })
+
         
+
 
     }
 
